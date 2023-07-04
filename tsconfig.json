@@ -21,8 +21,4 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   }, 
-  // "include": [
-  //   "src/**/*.ts",
-  //   "tsconfig-paths-bootstrap.ts"
-  // ],
 }
