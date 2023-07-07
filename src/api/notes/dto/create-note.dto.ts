@@ -5,7 +5,7 @@ import { NOTE_VALIDATION_SCHEMA } from 'config/constants';
 export class CreateNoteDto {
   @IsString()
   @IsNotEmpty()
-  id: string;
+  _id: string;
 
   @IsString()
   @IsNotEmpty()

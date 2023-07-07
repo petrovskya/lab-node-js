@@ -1,19 +1,23 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
-import { EMPTY_ARRAY, ERROR_TEXT, SUCCESS_DELETE_TEXT } from 'config/constants';
+import { ERROR_TEXT, SUCCESS_DELETE_TEXT } from 'config/constants';
 
 import { CreateNoteDto, UpdateNoteDto } from './dto';
+import { Note } from './entities';
 
 @Injectable()
 export class NotesService {
-  private readonly notes: CreateNoteDto[] = [];
-  getAllNotes(): [] {
-    return EMPTY_ARRAY;
+  constructor(@InjectModel(Note.name) private noteModel: Model<Note>) {}
+
+  getAllNotes(): Promise<Note[]> {
+    return this.noteModel.find().exec();
   }
 
-  createNote(createNoteDto: CreateNoteDto): CreateNoteDto {
-    this.notes.push(createNoteDto);
-    return createNoteDto;
+  async createNote(createNoteDto: CreateNoteDto): Promise<Note> {
+    const createdNote = new this.noteModel(createNoteDto);
+    return createdNote.save();
   }
 
   updateNote(updateNoteDto: UpdateNoteDto, id: string): UpdateNoteDto {

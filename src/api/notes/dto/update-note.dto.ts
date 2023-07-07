@@ -5,7 +5,7 @@ import { NOTE_VALIDATION_SCHEMA } from 'config/constants';
 export class UpdateNoteDto {
   @IsString()
   @IsNotEmpty()
-  readonly id: string;
+  readonly _id: string;
 
   @IsString()
   @IsNotEmpty()
