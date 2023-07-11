@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 export const TITLE_MIN_LENGTH = 3;
 
 export const NOTE_VALIDATION_SCHEMA = {
@@ -16,3 +18,7 @@ export const SUCCESS_DELETE_TEXT = (id: string) => ({
   success: true,
   id: id,
 });
+
+export const LOGGER_MESSAGE = (req: Request, res: Response) =>
+  `Request ${req.method} ${req.url}, Status Code - ${res.statusCode}` +
+  (res.statusMessage ? `: ${res.statusMessage}.` : '.');

@@ -13,3 +13,5 @@ export const PARAMS = {
   ID: 'id',
   NAME: 'name',
 };
+
+export const ALL_ROUTES = '*';
