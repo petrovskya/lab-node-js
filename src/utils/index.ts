@@ -1,0 +1,1 @@
+export { getResponseError } from './getResponseError';
