@@ -3,15 +3,13 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Param,
   Post,
   Put,
-  Res,
 } from '@nestjs/common';
-import { Response } from 'express';
 
 import { PARAMS, ROUTES, SUB_ROUTES } from 'config/constants';
+import { getResponseError } from 'utils';
 
 import { CreateNoteDto, UpdateNoteDto } from './dto';
 import { NotesService } from './notes.service';
@@ -21,26 +19,41 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Get(SUB_ROUTES.NOTES)
-  getAllNotes(@Res({ passthrough: true }) res: Response) {
-    res.status(HttpStatus.OK);
-    return this.notesService.getAllNotes();
+  async getAllNotes() {
+    try {
+      return await this.notesService.getAllNotes();
+    } catch (error) {
+      getResponseError(error);
+    }
   }
 
   @Post(SUB_ROUTES.NOTES)
-  createNote(@Body() createNoteDto: CreateNoteDto) {
-    return this.notesService.createNote(createNoteDto);
+  async createNote(@Body() createNoteDto: CreateNoteDto) {
+    try {
+      return await this.notesService.createNote(createNoteDto);
+    } catch (error) {
+      getResponseError(error, error.message);
+    }
   }
 
   @Put(SUB_ROUTES.NOTE_BY_ID)
-  updateNote(
+  async updateNote(
     @Body() updateNoteDto: UpdateNoteDto,
     @Param(PARAMS.ID) id: string,
-  ): UpdateNoteDto {
-    return this.notesService.updateNote(updateNoteDto, id);
+  ) {
+    try {
+      return await this.notesService.updateNote(updateNoteDto, id);
+    } catch (error) {
+      getResponseError(error, error.message);
+    }
   }
 
   @Delete(SUB_ROUTES.NOTE_BY_ID)
-  deleteNote(@Param(PARAMS.ID) id: string) {
-    return this.notesService.deleteNote(id);
+  async deleteNote(@Param(PARAMS.ID) id: string) {
+    try {
+      return await this.notesService.deleteNote(id);
+    } catch (error) {
+      getResponseError(error);
+    }
   }
 }
