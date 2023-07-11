@@ -1,1 +1,1 @@
-export { Note, NoteSchema } from './note.schema';
+export { Note, NoteSchema } from './note.entity';
