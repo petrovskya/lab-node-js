@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { GreetingsModule } from 'api/greetings';
 import { NotesController, NotesModule } from 'api/notes';
 import { ENVIRONMENT_PATH } from 'config/constants';
-import { LoggerMiddleware } from 'middleware';
+import { ErrorMiddleware, LoggerMiddleware } from 'middleware';
 
 @Module({
   imports: [
@@ -17,6 +17,7 @@ import { LoggerMiddleware } from 'middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ErrorMiddleware).forRoutes('*');
     consumer.apply(LoggerMiddleware).forRoutes(NotesController);
   }
 }

@@ -9,3 +9,5 @@ export const ERROR_VALIDATION_MESSAGES = {
   NOTE_CONTENT:
     'Content should be of minimum 3 characters length and of maximum 450 characters length',
 };
+
+export const DATABASE_CONNECTION_ERROR = 'No database connection.';

@@ -6,7 +6,9 @@ import { LOGGER_MESSAGE } from 'config/constants';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log(LOGGER_MESSAGE(req, res));
+    res.on('finish', () => {
+      console.log(LOGGER_MESSAGE(req, res));
+    });
     next();
   }
 }
