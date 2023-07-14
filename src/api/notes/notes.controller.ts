@@ -6,12 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 import { PARAMS, ROUTES, SUB_ROUTES } from 'config/constants';
-import { getResponseError } from 'utils';
 
-import { CreateNoteDto, UpdateNoteDto } from './dto';
+import { CreateNoteDto, NotesDto, UpdateNoteDto } from './dto';
 import { NotesService } from './notes.service';
 
 @Controller(ROUTES.API)
@@ -19,21 +19,18 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Get(SUB_ROUTES.NOTES)
-  async getAllNotes() {
-    try {
-      return await this.notesService.getAllNotes();
-    } catch (error) {
-      getResponseError(error);
-    }
+  async getAllNotes(@Query() params: NotesDto) {
+    return await this.notesService.getAllNotes(params);
+  }
+
+  @Get(SUB_ROUTES.NOTE_BY_ID)
+  async getNoteById(@Param(PARAMS.ID) id: string) {
+    return await this.notesService.getNoteById(id);
   }
 
   @Post(SUB_ROUTES.NOTES)
   async createNote(@Body() createNoteDto: CreateNoteDto) {
-    try {
-      return await this.notesService.createNote(createNoteDto);
-    } catch (error) {
-      getResponseError(error, error.message);
-    }
+    return await this.notesService.createNote(createNoteDto);
   }
 
   @Put(SUB_ROUTES.NOTE_BY_ID)
@@ -41,19 +38,11 @@ export class NotesController {
     @Body() updateNoteDto: UpdateNoteDto,
     @Param(PARAMS.ID) id: string,
   ) {
-    try {
-      return await this.notesService.updateNote(updateNoteDto, id);
-    } catch (error) {
-      getResponseError(error, error.message);
-    }
+    return await this.notesService.updateNote(updateNoteDto, id);
   }
 
   @Delete(SUB_ROUTES.NOTE_BY_ID)
   async deleteNote(@Param(PARAMS.ID) id: string) {
-    try {
-      return await this.notesService.deleteNote(id);
-    } catch (error) {
-      getResponseError(error);
-    }
+    return await this.notesService.deleteNote(id);
   }
 }
