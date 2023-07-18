@@ -14,11 +14,26 @@ export const NOTE_VALIDATION_SCHEMA = {
   },
 };
 
+export const USER_VALIDATION_SCHEMA = {
+  FIRST_NAME: { MIN_LENGTH: 2 },
+  LAST_NAME: { MIN_LENGTH: 2 },
+  EMAIL: {
+    MIN_LENGTH: 3,
+    MAX_LENGTH: 32,
+  },
+  PASSWORD: {
+    MIN_LENGTH: 8,
+    MAX_LENGTH: 32,
+  },
+};
+
 export const EMPTY_ARRAY: [] = [];
 
 export const NOT_FOUND_MESSAGE = {
   NOTES: 'Notes not found.',
   NOTE: 'Note not found.',
+  USERS: 'Users not found.',
+  USER: 'User not found.',
 };
 
 export const GREETING_TEXT = (name: string): string => `Hello, ${name}!`;
