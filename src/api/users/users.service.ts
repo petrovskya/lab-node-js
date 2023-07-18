@@ -17,6 +17,7 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto): Promise<UserDocument> {
     const createdUser = await this.userModel.create(createUserDto);
+
     return createdUser;
   }
 
@@ -39,6 +40,7 @@ export class UsersService {
 
   async deleteUser(id: string) {
     await this.userModel.findByIdAndUpdate({ _id: id }, { isDeleted: true });
+
     return SUCCESS_DELETE_TEXT(id);
   }
 }
