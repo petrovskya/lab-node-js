@@ -1,13 +1,16 @@
-const END_HOURS = 23;
-const END_MINUTES = 59;
-const END_SECONDS = 59;
-const END_MILLISECONDS = 999;
+import {
+  END_HOURS,
+  END_MILLISECONDS,
+  END_MINUTES,
+  END_SECONDS,
+} from 'config/constants';
 
 export const getEndOfTheDay = (createdAtParam: Date): Date => {
   const date = new Date(createdAtParam);
   const year = date.getFullYear();
   const monthIndex = date.getMonth();
   const day = date.getDate();
+
   const endOfTheDay = new Date(
     year,
     monthIndex,
@@ -17,5 +20,6 @@ export const getEndOfTheDay = (createdAtParam: Date): Date => {
     END_SECONDS,
     END_MILLISECONDS,
   );
+
   return endOfTheDay;
 };

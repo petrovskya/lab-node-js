@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
-import { escapeRegExp } from 'lodash';
 
 import {
   DEFAULT_NOTES_LIMIT_VALUE,
   DEFAULT_PAGE_VALUE,
   NOT_FOUND_MESSAGE,
   SUCCESS_DELETE_TEXT,
+  titleRegExp,
 } from 'config/constants';
 import { getEndOfTheDay, getResponseError, getSkipValue } from 'utils';
 
@@ -28,7 +28,7 @@ export class NotesService {
 
     const filter: FilterQuery<Note> = {
       isDeleted: false,
-      ...(title && { title: new RegExp(escapeRegExp(title), 'i') }),
+      ...(title && { title: titleRegExp(title) }),
       ...(createdAt && {
         createdAt: {
           $gte: createdAt,

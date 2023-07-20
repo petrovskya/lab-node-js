@@ -17,9 +17,6 @@ export class User {
   @Prop({ required: true, minlength: 8 })
   password: string;
 
-  @Prop()
-  refreshToken: string;
-
   @Prop({ default: false })
   isDeleted: boolean;
 }

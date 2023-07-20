@@ -13,7 +13,6 @@ import { CreateUserDto } from 'api/users/dto';
 import {
   COOKIE_MAX_AGE_IN_DAYS,
   COOKIE_NAME,
-  REQUEST_REFRESH_TOKEN_KEY,
   REQUEST_SUBJECT_KEY,
   ROUTES,
   SUB_ROUTES,
@@ -37,7 +36,7 @@ export class AuthController {
       httpOnly: true,
     });
 
-    return tokens;
+    return res.send(tokens);
   }
 
   @Post(SUB_ROUTES.LOG_IN)
@@ -49,15 +48,14 @@ export class AuthController {
       httpOnly: true,
     });
 
-    return tokens;
+    return res.send(tokens);
   }
 
   @UseGuards(AccessTokenGuard)
   @Get(SUB_ROUTES.LOG_OUT)
-  logOut(@Req() req: Request, @Res() res: Response) {
+  logOut(@Res() res: Response) {
     res.clearCookie(COOKIE_NAME);
-
-    this.authService.logOut(req.user[REQUEST_SUBJECT_KEY]);
+    return res.send();
   }
 
   @UseGuards(RefreshTokenGuard)
@@ -65,15 +63,13 @@ export class AuthController {
   async refreshTokens(@Req() req: Request, @Res() res: Response) {
     const userId = req.user[REQUEST_SUBJECT_KEY];
 
-    const refreshToken = req.user[REQUEST_REFRESH_TOKEN_KEY];
-
-    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+    const tokens = await this.authService.refreshTokens(userId);
 
     res.cookie(COOKIE_NAME, tokens.refreshToken, {
       maxAge: getCookieMaxAge(COOKIE_MAX_AGE_IN_DAYS),
       httpOnly: true,
     });
 
-    return tokens;
+    return res.send(tokens);
   }
 }

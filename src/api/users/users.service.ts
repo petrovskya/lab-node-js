@@ -12,13 +12,11 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async getUsers(): Promise<UserDocument[]> {
-    return await this.userModel.find().exec();
+    return await this.userModel.find();
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserDocument> {
-    const createdUser = await this.userModel.create(createUserDto);
-
-    return createdUser;
+  async createUser(createUserDto: CreateUserDto) {
+    return await this.userModel.create(createUserDto);
   }
 
   async getUserById(id: string): Promise<UserDocument> {
@@ -26,16 +24,16 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string): Promise<UserDocument> {
-    return await this.userModel.findOne({ email }).exec();
+    return await this.userModel.findOne({ email });
   }
 
   async updateUser(
     updateUserDto: UpdateUserDto,
     id: string,
   ): Promise<UserDocument> {
-    return await this.userModel
-      .findByIdAndUpdate(id, updateUserDto, { new: true })
-      .exec();
+    return await this.userModel.findByIdAndUpdate(id, updateUserDto, {
+      new: true,
+    });
   }
 
   async deleteUser(id: string) {

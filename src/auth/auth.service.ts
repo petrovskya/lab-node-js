@@ -54,33 +54,12 @@ export class AuthService {
     };
   }
 
-  async updateRefreshToken(userId: string, refreshToken: string) {
-    const hashedRefreshToken = await hash(refreshToken, HASH_SALT);
-
-    await this.usersService.updateUser(
-      {
-        refreshToken: hashedRefreshToken,
-      },
-      userId,
-    );
-  }
-
-  async refreshTokens(userId: string, refreshToken: string) {
+  async refreshTokens(userId: string) {
     const user = await this.usersService.getUserById(userId);
-
-    if (!user || !user.refreshToken)
-      throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED);
 
     if (!user) throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED);
 
-    const refreshTokenMatches = await compare(refreshToken, user.refreshToken);
-
-    if (!refreshTokenMatches) {
-      throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED);
-    }
     const tokens = await this.getTokens(user._id.toHexString(), user.email);
-
-    await this.updateRefreshToken(user._id.toHexString(), tokens.refreshToken);
 
     return tokens;
   }
@@ -106,11 +85,6 @@ export class AuthService {
       newUser.email,
     );
 
-    await this.updateRefreshToken(
-      newUser._id.toHexString(),
-      tokens.refreshToken,
-    );
-
     return tokens;
   }
 
@@ -126,13 +100,6 @@ export class AuthService {
 
     const tokens = await this.getTokens(user._id.toHexString(), user.email);
 
-    await this.updateRefreshToken(user._id.toHexString(), tokens.refreshToken);
-
     return tokens;
-  }
-
-  async logOut(userId: string) {
-    console.log(userId);
-    return this.usersService.updateUser({ refreshToken: null }, userId);
   }
 }

@@ -1,15 +1,17 @@
-import { Transform, TransformFnParams } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
+
+import { transformToInteger } from 'utils';
 
 export class NotesDto {
   @IsOptional()
   @IsNumber()
-  @Transform(({ value }: TransformFnParams) => parseInt(value, 10))
+  @Transform(transformToInteger)
   page: number;
 
   @IsOptional()
   @IsNumber()
-  @Transform(({ value }: TransformFnParams) => parseInt(value, 10))
+  @Transform(transformToInteger)
   limit: number;
 
   @IsOptional()
