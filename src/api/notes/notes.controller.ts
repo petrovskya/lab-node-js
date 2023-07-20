@@ -11,10 +11,10 @@ import {
 } from '@nestjs/common';
 
 import { PARAMS, ROUTES, SUB_ROUTES } from 'config/constants';
+import { AccessTokenGuard } from 'guards';
 
 import { CreateNoteDto, NotesDto, UpdateNoteDto } from './dto';
 import { NotesService } from './notes.service';
-import { AccessTokenGuard } from 'guards';
 
 @Controller(ROUTES.API)
 export class NotesController {
