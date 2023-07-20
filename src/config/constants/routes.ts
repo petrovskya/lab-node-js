@@ -10,6 +10,10 @@ export const SUB_ROUTES = {
   USERS: 'users',
   USER_BY_ID: 'users/:id?',
   USER_BY_EMAIL: 'users/:email?',
+  SIGN_UP: 'signup',
+  LOG_IN: 'login',
+  LOG_OUT: 'logout',
+  REFRESH: 'refresh',
 };
 
 export const PARAMS = {

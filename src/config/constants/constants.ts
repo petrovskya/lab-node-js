@@ -18,7 +18,7 @@ export const USER_VALIDATION_SCHEMA = {
   FIRST_NAME: { MIN_LENGTH: 2 },
   LAST_NAME: { MIN_LENGTH: 2 },
   EMAIL: {
-    MIN_LENGTH: 3,
+    MIN_LENGTH: 8,
     MAX_LENGTH: 32,
   },
   PASSWORD: {
@@ -28,6 +28,7 @@ export const USER_VALIDATION_SCHEMA = {
 };
 
 export const EMPTY_ARRAY: [] = [];
+export const EMPTY_STRING = '';
 
 export const NOT_FOUND_MESSAGE = {
   NOTES: 'Notes not found.',

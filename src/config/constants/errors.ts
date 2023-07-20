@@ -1,6 +1,10 @@
-export const ERROR_TEXT = {
+export const ERROR_MESSAGES = {
   NAME_NOT_FOUND: 'No name to greet. Name not found',
   BAD_REQUEST: 'Bad request',
+  ACCESS_DENIED: 'Access denied.',
+  USER_EXISTS: 'User already exists.',
+  USER_NOT_FOUND: 'User does not exists.',
+  WRONG_PASSWORD: 'Password is incorrect.',
 };
 
 export const ERROR_VALIDATION_MESSAGES = {
@@ -11,7 +15,7 @@ export const ERROR_VALIDATION_MESSAGES = {
   USER_FIRST_NAME: 'First name should be of minimum 2 characters length.',
   USER_LAST_NAME: 'Last name should be of minimum 2 characters length.',
   USER_EMAIL:
-    'Email should be of minimum 3 characters length and of maximum 32 characters length.',
+    'Email should be of minimum 8 characters length and of maximum 32 characters length.',
   USER_PASSWORD:
     'Password should be of minimum 8 characters length and of maximum 32 characters length.',
 };
