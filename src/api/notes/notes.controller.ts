@@ -9,6 +9,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import {
   APP_ENVIRONMENT,
@@ -18,11 +19,10 @@ import {
   UNKNOWN_ENVIRONMENT,
 } from 'config/constants';
 import { AccessTokenGuard } from 'guards';
+import { addEnvironmentFlag } from 'utils';
 
 import { CreateNoteDto, NotesDto, UpdateNoteDto } from './dto';
 import { NotesService } from './notes.service';
-import { ConfigService } from '@nestjs/config';
-import { addEnvironmentFlag } from 'utils';
 
 @Controller(ROUTES.API)
 export class NotesController {
