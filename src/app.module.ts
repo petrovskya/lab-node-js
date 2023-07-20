@@ -1,18 +1,28 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { GreetingsModule } from 'api/greetings';
 import { NotesController, NotesModule } from 'api/notes';
 import { UsersController, UsersModule } from 'api/users';
 import { AuthController, AuthModule } from 'auth';
-import { ENVIRONMENT_PATH } from 'config/constants';
+import configurations from 'config/configurations';
+import { DATABASE_ENVIRONMENT } from 'config/constants';
 import { ErrorMiddleware, LoggerMiddleware } from 'middleware';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ENVIRONMENT_PATH }),
-    MongooseModule.forRoot(String(process.env.DATABASE_URL)),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configurations],
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get(DATABASE_ENVIRONMENT),
+      }),
+      inject: [ConfigService],
+    }),
     GreetingsModule,
     NotesModule,
     UsersModule,

@@ -10,7 +10,26 @@ export const COOKIE_NAME = 'refreshToken';
 export const AUTHORIZATION_HEADER = 'Authorization';
 export const BEARER_TOKEN_START_VALUE = 'Bearer';
 export const ENVIRONMENT_PATH = './.env';
+
 export const STRATEGY = {
   REFRESH: 'refreshJwt',
   ACCESS: 'accessJwt',
 };
+
+export enum Environment {
+  DEVELOPMENT = 'DEV',
+  PRODUCTION = 'PROD',
+  TEST = 'TEST',
+}
+
+export const EnvironmentFlag = {
+  DEVELOPMENT: ' | Dev',
+  PRODUCTION: ' | Prod',
+  TEST: ' | Test',
+};
+
+export const UNKNOWN_ENVIRONMENT = 'unknown';
+
+export const APP_ENVIRONMENT = 'ENVIRONMENT';
+
+export const DATABASE_ENVIRONMENT = 'DATABASE_URL';

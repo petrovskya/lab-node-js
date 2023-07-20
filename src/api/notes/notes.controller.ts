@@ -10,15 +10,26 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { PARAMS, ROUTES, SUB_ROUTES } from 'config/constants';
+import {
+  APP_ENVIRONMENT,
+  PARAMS,
+  ROUTES,
+  SUB_ROUTES,
+  UNKNOWN_ENVIRONMENT,
+} from 'config/constants';
 import { AccessTokenGuard } from 'guards';
 
 import { CreateNoteDto, NotesDto, UpdateNoteDto } from './dto';
 import { NotesService } from './notes.service';
+import { ConfigService } from '@nestjs/config';
+import { addEnvironmentFlag } from 'utils';
 
 @Controller(ROUTES.API)
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(
+    private readonly notesService: NotesService,
+    private configService: ConfigService,
+  ) {}
 
   @UseGuards(AccessTokenGuard)
   @Get(SUB_ROUTES.NOTES)
@@ -35,7 +46,18 @@ export class NotesController {
   @UseGuards(AccessTokenGuard)
   @Post(SUB_ROUTES.NOTES)
   async createNote(@Body() createNoteDto: CreateNoteDto) {
-    return await this.notesService.createNote(createNoteDto);
+    const { title, content } = createNoteDto;
+
+    const appEnvironment = this.configService.get(APP_ENVIRONMENT);
+
+    const titleWithFlag = addEnvironmentFlag(appEnvironment, title);
+
+    if (titleWithFlag instanceof Error) throw new Error(UNKNOWN_ENVIRONMENT);
+
+    return await this.notesService.createNote({
+      title: titleWithFlag,
+      content,
+    });
   }
 
   @UseGuards(AccessTokenGuard)
