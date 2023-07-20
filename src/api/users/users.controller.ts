@@ -4,14 +4,16 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import { PARAMS, ROUTES, SUB_ROUTES } from 'config/constants';
+import { AccessTokenGuard } from 'guards';
 
-import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { UsersService } from './users.service';
 
 @Controller(ROUTES.API)
 export class UsersController {
@@ -37,7 +39,8 @@ export class UsersController {
     return await this.usersService.createUser(createUserDto);
   }
 
-  @Put(SUB_ROUTES.USER_BY_ID)
+  @UseGuards(AccessTokenGuard)
+  @Patch(SUB_ROUTES.USER_BY_ID)
   async updateUser(
     @Body() updateUserDto: UpdateUserDto,
     @Param(PARAMS.ID) id: string,
@@ -45,6 +48,7 @@ export class UsersController {
     return await this.usersService.updateUser(updateUserDto, id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete(SUB_ROUTES.USER_BY_ID)
   async deleteNote(@Param(PARAMS.ID) id: string) {
     return await this.usersService.deleteUser(id);

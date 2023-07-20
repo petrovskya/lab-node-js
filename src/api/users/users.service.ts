@@ -4,8 +4,8 @@ import { Model } from 'mongoose';
 
 import { SUCCESS_DELETE_TEXT } from 'config/constants';
 
-import { User, UserDocument } from './entities';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { User, UserDocument } from './entities';
 
 @Injectable()
 export class UsersService {

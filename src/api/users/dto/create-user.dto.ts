@@ -1,4 +1,4 @@
-import { IsString, Length, MinLength } from 'class-validator';
+import { IsOptional, IsString, Length, MinLength } from 'class-validator';
 
 import {
   USER_VALIDATION_SCHEMA,
@@ -39,5 +39,6 @@ export class CreateUserDto {
   password: string;
 
   @IsString({ message: ERROR_VALIDATION_MESSAGES.NOT_STRING })
+  @IsOptional()
   refreshToken: string;
 }
